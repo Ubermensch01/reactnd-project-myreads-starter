@@ -1,55 +1,70 @@
 import React, {Component} from "react";
-import {Link, Route} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Shelf from "../components/Shelf";
 import * as BooksAPI from "../BooksAPI";
 
-class IndexRoute extends Component {
+class Index extends Component {
 
     state = {
-        showSearchPage: false,
-        currentBooks: [],
-        booksToRead: [],
+        currentlyReading: [],
+        wantToRead: [],
         read: []
     };
 
     componentDidMount() {
         console.log("updating initial state");
-        this.updateState();
-    }
-
-    updateState() {
         BooksAPI.getAll().then((currentBooks) => {
             this.setState({
-                currentBooks: currentBooks
+                currentlyReading: currentBooks
                     .filter(currentBook => currentBook.shelf === 'currentlyReading'),
-                booksToRead: currentBooks
+                wantToRead: currentBooks
                     .filter(currentBook => currentBook.shelf === 'wantToRead'),
                 read: currentBooks
                     .filter(currentBook => currentBook.shelf === 'read')
             });
             console.log("update complete");
-        })
+        });
     }
 
     update(book, shelf) {
         book.shelf = shelf;
-        console.log("updating ", book.title, " to ", shelf);
         BooksAPI.update(book, shelf).then(() => {
-            this.updateState();
-        });
+            this.setState({
+                currentlyReading: this.state.currentlyReading
+                    .filter(currentBook => currentBook.id !== book.id),
+                wantToRead: this.state.wantToRead
+                    .filter(currentBook => currentBook.id !== book.id),
+                read: this.state.read
+                    .filter(currentBook => currentBook.id !== book.id),
+            });
+            console.log(shelf);
+            switch (shelf) {
+                case 'currentlyReading':
+                    this.setState({currentlyReading: this.state.currentlyReading.concat([book])});
+                    break;
+                case 'wantToRead':
+                    this.setState({wantToRead: this.state.wantToRead.concat([book])});
+                    break;
+                case 'read':
+                    this.setState({read: this.state.read.concat([book])});
+                    break;
+                default:
+                    break;
+            }
+        })
     }
 
     render() {
-        return (<Route exact path='/' render={({history}) => (
+        return (
             <div className="app" key="myReads">
                 <div className="list-books-title">
                     <h1>MyReads</h1>
                 </div>
                 <Shelf title="Currently Reading"
-                       books={this.state.currentBooks}
+                       books={this.state.currentlyReading}
                        updateShelf={this.update.bind(this)}/>
                 <Shelf title="Want to Read"
-                       books={this.state.booksToRead}
+                       books={this.state.wantToRead}
                        updateShelf={this.update.bind(this)}/>
                 <Shelf title="Read"
                        books={this.state.read}
@@ -58,8 +73,8 @@ class IndexRoute extends Component {
                     <Link to="/create">Add a book</Link>
                 </div>
             </div>
-        )}/>)
+        )
     }
 }
 
-export default IndexRoute;
+export default Index;

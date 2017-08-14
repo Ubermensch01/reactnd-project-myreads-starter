@@ -7,11 +7,6 @@ class Book extends Component {
         {
             content: this.props.content,
             updateShelf: this.props.updateShelf,
-            update: function (event) {
-                console.log('stuff', event.target.value);
-                console.log(this.props.content);
-                this.updateShelf(this.state.content, event.target.value);
-            }
         };
 
     update(event) {

@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {Link, Route} from "react-router-dom";
+import {Link} from "react-router-dom";
 import SearchShelf from "../components/SearchShelf";
 import * as BooksAPI from "../BooksAPI";
 
 
-class CreateRoute extends Component {
+class Create extends Component {
     state = {
         searchResults: []
     };
@@ -35,7 +35,7 @@ class CreateRoute extends Component {
     }
 
     render() {
-        return (<Route path='/create' render={() => (<div className="search-books">
+        return (<div className="search-books">
             <div className="search-books-bar">
                 <Link className='close-search' to="/">Close</Link>
                 <div className="search-books-input-wrapper">
@@ -44,8 +44,8 @@ class CreateRoute extends Component {
                 </div>
             </div>
             <SearchShelf books={this.state.searchResults} updateShelf={this.update.bind(this)}/>
-        </div>)}/>);
+        </div>);
     }
 }
 
-export default CreateRoute;
+export default Create;
