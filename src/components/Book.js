@@ -13,6 +13,19 @@ class Book extends Component {
         this.props.updateShelf(this.state.content, event.target.value);
     }
 
+    getBookShelf() {
+        var book = this.state.content;
+        if (!book.shelf) {
+            console.log("updating shelves of books");
+            book.shelf = this.props.getBookShelf(this.state.content);
+            this.setState({content: book});
+        }
+    }
+
+    componentDidMount() {
+        this.getBookShelf();
+    }
+
     render() {
         return (
             <li>
@@ -22,7 +35,7 @@ class Book extends Component {
                             backgroundImage: `url(${this.props.content.imageLinks.smallThumbnail})`
                         }}/>
                         <div className="book-shelf-changer">
-                            <select value={this.props.content.shelf ? this.props.content.shelf : "none"}
+                            <select value={this.state.content.shelf ? this.state.content.shelf : "none"}
                                     onChange={this.update.bind(this)}>
                                 <option value="" disabled>Move to...</option>
                                 <option value="currentlyReading">

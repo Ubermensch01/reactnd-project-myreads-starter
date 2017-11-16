@@ -43,7 +43,9 @@ class Create extends Component {
                            onChange={(event) => this.search(event.target.value, 10)}/>
                 </div>
             </div>
-            <SearchShelf books={this.state.searchResults} updateShelf={this.update.bind(this)}/>
+            <SearchShelf books={this.state.searchResults}
+                         updateShelf={this.update.bind(this)}
+                         getBookShelf={this.props.getBookShelf}/>
         </div>);
     }
 }

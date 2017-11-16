@@ -5,10 +5,15 @@ import * as BooksAPI from "../BooksAPI";
 
 class Index extends Component {
 
+    constructor(props) {
+        super(props);
+        this.updateShelf = this.update.bind(this);
+    }
+
     state = {
-        currentlyReading: [],
-        wantToRead: [],
-        read: []
+        currentlyReading: this.props.currentlyReading,
+        wantToRead: this.props.wantToRead,
+        read: this.props.read
     };
 
     componentDidMount() {
@@ -22,6 +27,7 @@ class Index extends Component {
                 read: currentBooks
                     .filter(currentBook => currentBook.shelf === 'read')
             });
+            this.props.updateShelves(this.state.currentlyReading, this.state.wantToRead, this.state.read);
             console.log("update complete");
         });
     }
@@ -62,13 +68,19 @@ class Index extends Component {
                 </div>
                 <Shelf title="Currently Reading"
                        books={this.state.currentlyReading}
-                       updateShelf={this.update.bind(this)}/>
+                       updateShelf={this.updateShelf}
+                       getBookShelf={this.props.getBookShelf}
+                />
                 <Shelf title="Want to Read"
                        books={this.state.wantToRead}
-                       updateShelf={this.update.bind(this)}/>
+                       updateShelf={this.updateShelf}
+                       getBookShelf={this.props.getBookShelf}
+                />
                 <Shelf title="Read"
                        books={this.state.read}
-                       updateShelf={this.update.bind(this)}/>
+                       updateShelf={this.updateShelf}
+                       getBookShelf={this.props.getBookShelf}
+                />
                 <div className="open-search">
                     <Link to="/create">Add a book</Link>
                 </div>

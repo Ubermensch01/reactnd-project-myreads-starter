@@ -12,7 +12,9 @@ class Shelf extends Component {
                         {this.props.books.map((book) => <Book
                             content={book}
                             key={book.id}
-                            updateShelf={this.props.updateShelf.bind(this)}/>)}
+                            updateShelf={this.props.updateShelf.bind(this)}
+                            getBookShelf={this.props.getBookShelf}
+                        />)}
                     </ol>
                 </div>
             </div>
