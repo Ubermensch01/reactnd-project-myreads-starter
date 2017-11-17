@@ -17,7 +17,6 @@ class Index extends Component {
     };
 
     componentDidMount() {
-        console.log("updating initial state");
         BooksAPI.getAll().then((currentBooks) => {
             this.setState({
                 currentlyReading: currentBooks
@@ -28,7 +27,6 @@ class Index extends Component {
                     .filter(currentBook => currentBook.shelf === 'read')
             });
             this.props.updateShelves(this.state.currentlyReading, this.state.wantToRead, this.state.read);
-            console.log("update complete");
         });
     }
 

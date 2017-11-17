@@ -24,7 +24,6 @@ class Create extends Component {
 
     update(book, shelf) {
         book.shelf = shelf;
-        console.log("updating ", book.title, " to ", shelf);
         BooksAPI.update(book, shelf).then(() => {
         });
         this.setState({

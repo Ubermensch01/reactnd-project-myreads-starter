@@ -3,10 +3,6 @@ import Book from "./Book";
 
 class SearchShelf extends Component {
 
-    updateShelf() {
-
-    }
-
     render() {
         return (
             <div className="search-books-results" key="search-results">
@@ -14,7 +10,7 @@ class SearchShelf extends Component {
                     {this.props.books.map((book) => <Book
                         content={book}
                         key={book.id}
-                        updateShelf={this.props.updateShelf.bind(this)}
+                        updateShelf={this.props.updateShelf}
                         getBookShelf={this.props.getBookShelf}
                     />)}
                 </ol>

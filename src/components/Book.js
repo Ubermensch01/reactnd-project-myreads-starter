@@ -5,8 +5,7 @@ class Book extends Component {
 
     state =
         {
-            content: this.props.content,
-            updateShelf: this.props.updateShelf,
+            content: this.props.content
         };
 
     update(event) {
@@ -14,9 +13,8 @@ class Book extends Component {
     }
 
     getBookShelf() {
-        var book = this.state.content;
+        var book = {...this.state.content};
         if (!book.shelf) {
-            console.log("updating shelves of books");
             book.shelf = this.props.getBookShelf(this.state.content);
             this.setState({content: book});
         }
@@ -32,7 +30,9 @@ class Book extends Component {
                 <div className="book">
                     <div className="book-top">
                         <div className="book-cover" style={{
-                            backgroundImage: `url(${this.props.content.imageLinks.smallThumbnail})`
+                            backgroundImage: `url(${this.props.content.imageLinks.smallThumbnail
+                                ? this.props.content.imageLinks.smallThumbnail
+                                : "http://via.placeholder.com/128x193?text=No%20Cover"})`
                         }}/>
                         <div className="book-shelf-changer">
                             <select value={this.state.content.shelf ? this.state.content.shelf : "none"}

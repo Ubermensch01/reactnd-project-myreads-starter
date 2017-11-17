@@ -4,6 +4,7 @@ import "./App.css";
 import Index from "./components/Index";
 import {Route, Switch} from "react-router-dom";
 import Create from "./components/Create";
+import Error from "./components/Error";
 
 
 class BooksApp extends React.Component {
@@ -53,11 +54,12 @@ class BooksApp extends React.Component {
                                getBookShelf={this.getBookShelf.bind(this)}
                         />
                     </Route>
-                    <Route path="/create">
+                    <Route exact path="/create">
                         <Create
                             getBookShelf={this.getBookShelf.bind(this)}
                         />
                     </Route>
+                    <Route component={Error} />
                 </Switch>
             </div>
         )
