@@ -3,7 +3,7 @@ import React from "react";
 import "./App.css";
 import Index from "./components/Index";
 import {Route, Switch} from "react-router-dom";
-import Create from "./components/Create";
+import Search from "./components/Search";
 import Error from "./components/Error";
 
 
@@ -54,12 +54,12 @@ class BooksApp extends React.Component {
                                getBookShelf={this.getBookShelf.bind(this)}
                         />
                     </Route>
-                    <Route exact path="/create">
-                        <Create
+                    <Route exact path="/search">
+                        <Search
                             getBookShelf={this.getBookShelf.bind(this)}
                         />
                     </Route>
-                    <Route component={Error} />
+                    <Route component={Error}/>
                 </Switch>
             </div>
         )
